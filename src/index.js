@@ -38,7 +38,49 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+   expr=expr.split('**********');
+   numberWords=expr.length;
+   const newArray=[];
+   let result='';
+   let morseCode='';
+   let letterCode=[];
+
+
+   for (let i=0; i<numberWords; i++) {
+        let word=expr[i];
+        numberLettersInWord=(word.length)/10;
+
+        /*идем по буквам в слове: каждая кодируется 10-ью битами*/
+        for (let j=0; j<word.length; j+=10) {
+
+        
+            for (let k=0; k<10; k++) {
+                if (word[j+k] ==='1' && word[j+k+1] ==='0') {
+                    morseCode=`${morseCode}.`;
+                    k+=1;
+                }
+                else if (word[j+k] ==='1' && word[j+k+1] ==='1') {
+                    morseCode=`${morseCode}-`;
+                    k+=1;
+                }
+            }
+
+            letterCode.push(morseCode);
+            if (letterCode in MORSE_TABLE) {
+                result=`${result}${MORSE_TABLE[letterCode]}`;
+            } 
+
+            morseCode='';
+            letterCode=[];
+        }
+
+        result=`${result} `;
+
+   }
+   
+return result.trim();
+
+    
 }
 
 module.exports = {
